@@ -1,66 +1,25 @@
-## Foundry
+# Token Smart Contract
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Background
 
-Foundry consists of:
+The smart contract in this repository is part of a 15 day smart contract building challenge. The challenge has three levels of difficulty, namely:
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+- Basic: The challenges from Day 1 to Day 5
+- Intermediate: The challenges from Day 6 to Day 10
+- Advanced: The challenges from Day 11 to Day 15
 
-## Documentation
+## Challenge Task: Basic 3
 
-https://book.getfoundry.sh/
+Write a smart contract that can implement a simple voting system. The contract should have an array that stores the candidates’ names. The contract should also have a mapping that stores the votes for each candidate. The contract should also have a function to allow voters to cast their votes, only once per address. The contract should also have a function to declare the winner, based on the highest number of votes.
 
-## Usage
+## Disclaimer:
 
-### Build
+This is provided as a basic example and should not be used in production without proper security and testing. If to be used in production, use at your own risk.
 
-```shell
-$ forge build
-```
+## License
 
-### Test
+This contract is unlicensed.
 
-```shell
-$ forge test
-```
+## Acknowledgments
 
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+This contract was developed and tested using Foundry, a Solidity development and testing platform.
