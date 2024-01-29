@@ -13,32 +13,42 @@ The contract should also have a function to declare the winner, based on the hig
 */
 
 contract Voting {
-    string[] public candidateNames; // Array of candidate names
-    mapping(string => uint) public candidateVotes; // Mapping to store votes of each candidate
-    mapping(address => bool) public hasVoted; // Mapping to keep track of who has voted
+    // Public array holding names of candidates
+    string[] public candidateNames;
 
-    // Constructor to initialise candidates list
+    // Mapping to store the number of votes for each candidate
+    mapping(string => uint) public candidateVotes;
+
+    // Mapping to track whether an address (person) has already voted or not
+    mapping(address => bool) public hasVoted;
+
+    // Constructor to initialize the candidates list when a contract is deployed
     constructor(string[] memory candidates) {
         candidateNames = candidates;
     }
 
-    // Function to cast a vote
+    // Function to cast a vote for a candidate
     function castVote(string memory _candidateName) public {
-        require(!hasVoted[msg.sender], "Has voted"); // Check if one has already voted
+        // Check that the sender hasn't voted already
+        require(!hasVoted[msg.sender], "Has voted");
 
-        require(checkCandidateExists(_candidateName), "Invalid candidate"); // Check if the candidate exists
+        // Check that the candidate exists
+        require(checkCandidateExists(_candidateName), "Invalid candidate");
 
-        candidateVotes[_candidateName]++; // Increment the vote for the candidate
-        hasVoted[msg.sender] = true; // Updates the status of voter and noting that the person has voted
+        // Increment the vote count for the candidate
+        candidateVotes[_candidateName]++;
+
+        // Record that the sender has voted
+        hasVoted[msg.sender] = true;
     }
 
-    // Funcction to declare winner
+    // Function to declare the winner of the election based on the highest votes
     function declareWinner() public view returns (string memory) {
-        // Find the candidate with the highest number of votes
+        // Assuming the first candidate has the max number of votes initially
         uint maxVotes = candidateVotes[candidateNames[0]];
         string memory winner = candidateNames[0];
 
-        // Find the candidate with the highest number of votes
+        // Loop through all candidates to find the one with the most votes
         for (uint i = 0; i < candidateNames.length; i++) {
             if (candidateVotes[candidateNames[i]] > maxVotes) {
                 maxVotes = candidateVotes[candidateNames[i]];
@@ -46,21 +56,20 @@ contract Voting {
             }
         }
 
-        // Return the winner
+        // Return the name of the candidate with the most votes
         return winner;
     }
 
-    function checkCandidateExists(
-        string memory candidateName
-    ) private view returns (bool) {
+    // Private helper function to check if a candidate exists in the candidate list
+    function checkCandidateExists(string memory candidateName) private view returns (bool) {
         for (uint i = 0; i < candidateNames.length; i++) {
-            if (
-                keccak256(abi.encodePacked(candidateNames[i])) ==
-                keccak256(abi.encodePacked(candidateName))
-            ) {
+            // Compare hashed strings to see if the candidate's name exists
+            if (keccak256(abi.encodePacked(candidateNames[i])) == keccak256(abi.encodePacked(candidateName))) {
+                // Candidate exists
                 return true;
             }
         }
+        // Candidate doesn't exist
         return false;
     }
 }
